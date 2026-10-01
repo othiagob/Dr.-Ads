@@ -1,0 +1,138 @@
+{
+  "exportFormatVersion": 2,
+  "exportTime": "2026-09-30 00:00:00",
+  "containerVersion": {
+    "path": "accounts/1000000000/containers/20000000/versions/0",
+    "accountId": "1000000000",
+    "containerId": "20000000",
+    "container": {
+      "name": "Dr. Ads - Container Mestre",
+      "publicId": "GTM-MASTER",
+      "usageContext": ["WEB"]
+    },
+    "tag": [
+      {
+        "name": "GA4 - Configuração Base",
+        "type": "gaaw_setup",
+        "parameter": [
+          { "type": "BOOLEAN", "key": "sendPageView", "value": "true" },
+          { "type": "TEMPLATE", "key": "measurementId", "value": "{{Constante - GA4 Measurement ID}}" }
+        ],
+        "firingTriggerId": ["2147479553"]
+      },
+      {
+        "name": "GA4 - Evento WhatsApp Click",
+        "type": "gaawe",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "eventName", "value": "whatsapp_click" },
+          { "type": "TAG_REFERENCE", "key": "measurementId", "value": "GA4 - Configuração Base" },
+          {
+            "type": "LIST",
+            "key": "eventParameters",
+            "list": [
+              { "type": "MAP", "map": [{ "type": "TEMPLATE", "key": "name", "value": "lead_channel" }, { "type": "TEMPLATE", "key": "value", "value": "whatsapp" }] },
+              { "type": "MAP", "map": [{ "type": "TEMPLATE", "key": "name", "value": "utm_source" }, { "type": "TEMPLATE", "key": "value", "value": "{{dlv - utm_source}}" }] },
+              { "type": "MAP", "map": [{ "type": "TEMPLATE", "key": "name", "value": "utm_campaign" }, { "type": "TEMPLATE", "key": "value", "value": "{{dlv - utm_campaign}}" }] },
+              { "type": "MAP", "map": [{ "type": "TEMPLATE", "key": "name", "value": "doctor_name" }, { "type": "TEMPLATE", "key": "value", "value": "{{dlv - doctor_name}}" }] }
+            ]
+          }
+        ],
+        "firingTriggerId": ["101"]
+      },
+      {
+        "name": "Google Ads - Conversão WhatsApp",
+        "type": "awct",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "conversionId", "value": "{{Constante - Google Ads ID}}" },
+          { "type": "TEMPLATE", "key": "conversionLabel", "value": "{{Constante - Conversao WhatsApp Label}}" }
+        ],
+        "firingTriggerId": ["101"]
+      },
+      {
+        "name": "Google Ads - Conversão Formulário",
+        "type": "awct",
+        "parameter": [
+          { "type": "TEMPLATE", "key": "conversionId", "value": "{{Constante - Google Ads ID}}" },
+          { "type": "TEMPLATE", "key": "conversionLabel", "value": "{{Constante - Conversao Form Label}}" }
+        ],
+        "firingTriggerId": ["102"]
+      }
+    ],
+    "trigger": [
+      {
+        "triggerId": "101",
+        "name": "Evento Customizado - whatsapp_lead_click",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "whatsapp_lead_click" }
+            ]
+          }
+        ]
+      },
+      {
+        "triggerId": "102",
+        "name": "Evento Customizado - form_lead_submit",
+        "type": "CUSTOM_EVENT",
+        "customEventFilter": [
+          {
+            "type": "EQUALS",
+            "parameter": [
+              { "type": "TEMPLATE", "key": "arg0", "value": "{{_event}}" },
+              { "type": "TEMPLATE", "key": "arg1", "value": "form_lead_submit" }
+            ]
+          }
+        ]
+      }
+    ],
+    "variable": [
+      {
+        "name": "Constante - GA4 Measurement ID",
+        "type": "c",
+        "parameter": [{ "type": "TEMPLATE", "key": "value", "value": "G-SUBSTITUA_AQUI" }]
+      },
+      {
+        "name": "Constante - Google Ads ID",
+        "type": "c",
+        "parameter": [{ "type": "TEMPLATE", "key": "value", "value": "AW-123456789" }]
+      },
+      {
+        "name": "Constante - Conversao WhatsApp Label",
+        "type": "c",
+        "parameter": [{ "type": "TEMPLATE", "key": "value", "value": "WHATSAPP_LABEL_HERE" }]
+      },
+      {
+        "name": "Constante - Conversao Form Label",
+        "type": "c",
+        "parameter": [{ "type": "TEMPLATE", "key": "value", "value": "FORM_LABEL_HERE" }]
+      },
+      {
+        "name": "dlv - utm_source",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "TEMPLATE", "key": "name", "value": "utm_source" }
+        ]
+      },
+      {
+        "name": "dlv - utm_campaign",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "TEMPLATE", "key": "name", "value": "utm_campaign" }
+        ]
+      },
+      {
+        "name": "dlv - doctor_name",
+        "type": "v",
+        "parameter": [
+          { "type": "INTEGER", "key": "dataLayerVersion", "value": "2" },
+          { "type": "TEMPLATE", "key": "name", "value": "doctor_name" }
+        ]
+      }
+    ]
+  }
+}
